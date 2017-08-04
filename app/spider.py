@@ -120,10 +120,6 @@ def mkdir(directory):
         os.makedirs(directory)
 
 
-def download_one(directory, url):
-    pass
-
-
 def download_all_accept(submissions):
     directory = os.path.join(BASE_PATH, 'solution')
     mkdir(directory)
