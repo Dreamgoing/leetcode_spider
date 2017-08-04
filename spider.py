@@ -147,6 +147,7 @@ def gen_filename(directory, title):
 
 if __name__ == '__main__':
     # print 'base', BASE_PATH
+    print 'welcome!'
     login()
     print(is_login())
     s = get_problem_list()
