@@ -34,29 +34,27 @@ LANG_MAPPING = {
 
 
 def bs(html_doc):
-    return BeautifulSoup(html_doc, "html.parser", from_encoding='uft-8')
+    return BeautifulSoup(html_doc, "html.parser")
 
 
-def login():
+def login(username, password):
     url = "https://leetcode.com/accounts/login/"
     res = session.get(url=url, headers=headers_base)
     soup = bs(res.text)
 
-    print(soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value'])
     csrfmiddlewaretoken = soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']
 
-    print(res.cookies['csrftoken'])
+    # print(res.cookies['csrftoken'])
 
     # csrfmiddlewaretoken 和 cookie都能正常工作
     login_data['csrfmiddlewaretoken'] = csrfmiddlewaretoken
-    login_data['login'] = "786373153@qq.com"
-    login_data['password'] = "wrx0831"
+    login_data['login'] = username
+    login_data['password'] = password
     res = session.post(url, headers=headers_base, data=login_data)
 
 
 def is_login():
     url = "https://leetcode.com/profile/"
-    headers_base['Referer'] = 'https://leetcode.com/dream_going/'
     res = session.get(url, headers=headers_base)
     return res.status_code == 200
 
@@ -74,10 +72,9 @@ def get_specific_solution(filename, url):
     regex = re.compile('submissionCode: \'(.*?)\'', re.MULTILINE | re.UNICODE)
     tmp = regex.search(soup.text)
     json_txt = '"' + tmp.group(1) + '"'
-    j = json.loads(json_txt)
-    print j
+    code = json.loads(json_txt)
     with io.open(filename, 'w', encoding='utf8') as f:
-        f.write(j)
+        f.write(code)
         f.close()
 
 
@@ -88,20 +85,6 @@ def get_encoding_type(s):
         return 'unicode'
     else:
         return type(s)
-
-
-def use_encoding():
-    s = u'"蛋疼\\u000A egg烦"'
-    print s.encode('ascii', 'ignore')
-    print json.loads(s)
-    j = json.loads(s)
-
-    print type(s)
-    b = s.replace('\\u000A', '\uOOOA')
-    print b
-
-    print s.encode('utf-8').decode('unicode-escape')
-    print s
 
 
 def get_problem_list():
@@ -127,8 +110,8 @@ def download_all_accept(submissions):
         if 'status_display' in solution:
             if solution['status_display'] == 'Accepted':
                 accept_url = BASE_URL + solution['url']
-                print accept_url
                 title = gen_title(solution['title'], LANG_MAPPING[solution['lang']])
+                print 'Download: ' + title
                 filename = gen_filename(directory, title)
                 get_specific_solution(filename, accept_url)
 
@@ -144,12 +127,13 @@ def gen_filename(directory, title):
 if __name__ == '__main__':
     # print 'base', BASE_PATH
     print 'welcome!'
-    login()
-    print(is_login())
-    s = get_problem_list()
-    download_all_accept(s)
-    # get_submissions()
-    # get_specific_solution(112140249, 'test.cpp')
-    # get_specific_solution(111855773, 'MergeTwoSortedLists.cpp')
-    # use_encode()
-    # use_encoding()
+    username = raw_input('please input your username')
+    password = raw_input('please input your password')
+    login(username=username, password=password)
+    if is_login():
+        print 'login success'
+        s = get_problem_list()
+        download_all_accept(s)
+        print 'Download: finished'
+    else:
+        print 'login failed'

@@ -1,4 +1,7 @@
 # coding=utf-8
-class Crawler(object):
+import requests.sessions
+class Crawler():
     def __init__(self):
         pass
+
+
