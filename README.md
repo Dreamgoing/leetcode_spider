@@ -16,6 +16,9 @@ Write pythonic project for learning web crawler
 
 + Refactor code and add more function
 + Make it more pythonic
++ Use docker
++ Use k8s
++ Use flask and design RESTful API
 
 ## How to use
 >  it works well in python2.7
