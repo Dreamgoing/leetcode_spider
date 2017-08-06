@@ -1,8 +1,10 @@
+# coding=utf-8
+
 import logging
 import re
 
 from app.settings import URL_BASE, HEADERS_BASE
-from app.model.base import Model
+from app.models.base import Model
 
 
 class Account(Model):
