@@ -3,6 +3,8 @@
 import requests
 import requests.utils
 
+from app.models.account import Account
+
 
 def authenticated(func):
     """
@@ -11,4 +13,8 @@ def authenticated(func):
     :return:
     """
     def wrapper(self, *args, **kwargs):
-        pass
+        success = False
+        if 'cookie' in requests.utils.dict_from_cookiejar(self.cookie):
+            """judge cookie is existed and valid"""
+
+        """输入account代码"""

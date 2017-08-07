@@ -16,3 +16,4 @@ class Model(requests.Session):
         page = self.get(url=this_url, headers=HEADERS_BASE)
         soup = beautiful_soup(page)
         return soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']
+    

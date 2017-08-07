@@ -19,6 +19,8 @@ Write pythonic project for learning web crawler
 + Use docker
 + Use k8s
 + Use flask and design RESTful API
++ To use celery and worker 
++ To support gray policy
 
 ## How to use
 >  it works well in python2.7

@@ -23,3 +23,6 @@ clean:
 
 delete:
 	rm -r ./solution
+
+test:
+    $(PYTHON)
