@@ -7,6 +7,11 @@
 
 Write pythonic project for learning web crawler
 
++ High available
++ Pythonic code
++ Scalable 
++ Object Oriented
+
 ## Feature Support
 
 + User login 
@@ -21,6 +26,9 @@ Write pythonic project for learning web crawler
 + Use flask and design RESTful API
 + To use celery and worker 
 + To support gray policy
++ To support docker and pipline
++ To add Unittest
++ To design as a micro server
 
 ## How to use
 >  it works well in python2.7

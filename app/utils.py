@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import io
 
 from bs4 import BeautifulSoup
 
@@ -31,6 +32,11 @@ def gen_file_path(directory, code_name):
 
 
 def get_user_info():
-    username = input('please input your username:')
-    password = input('please input your password')
+    username = raw_input('please input your username:')
+    password = raw_input('please input your password')
     return username, password
+
+
+def write_file(filename, content, encoding='utf-8'):
+    with io.open(filename, 'w', encoding=encoding) as f:
+        f.write(content)

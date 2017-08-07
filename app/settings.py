@@ -4,6 +4,10 @@ import os
 PATH_BASE = os.path.dirname(os.path.abspath(__file__))
 
 URL_BASE = "https://leetcode.com"
+COOKIE_FILENAME = 'cookie.txt'
+MAX_LIMIT = 1000
+URL_SUBMISSION_HISTORY = "https://leetcode.com/api/submissions/?offset=0&limit=1000"
+SOLUTION_DIRNAME = 'solution'
 
 HEADERS_BASE = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',

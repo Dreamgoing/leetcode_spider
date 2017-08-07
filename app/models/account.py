@@ -3,8 +3,9 @@
 import logging
 import re
 
-from app.settings import URL_BASE, HEADERS_BASE
+from app.settings import URL_BASE
 from app.models.base import Model
+from app.decorators.auth import authenticated
 
 
 class Account(Model):
@@ -16,18 +17,14 @@ class Account(Model):
         self.password = password
 
     def login(self):
-        """
-        user login
-        :param account: email
-        :param password:
-        :return:
-        """
         login_data = {'login': self.account,
                       'password': self.password,
                       'csrfmiddlewaretoken': self.csrfmiddlewaretoken}
 
-        self.post(self.login_url, headers=HEADERS_BASE, data=login_data)
+        self.do_request(url=self.login_url, data=login_data)
 
+    # to find out the difference between decorators order
+    @authenticated
     @property
     def username(self):
         """
