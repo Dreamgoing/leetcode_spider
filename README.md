@@ -21,6 +21,7 @@ Write pythonic project for learning web crawler
 
 + Refactor code and add more function
 + Make it more pythonic
++ To use multiprocess
 + Use docker
 + Use k8s
 + Use flask and design RESTful API
