@@ -54,7 +54,8 @@ class Submission(Model):
         submission_code = regex.search(soup.text)
         json_txt = '"' + submission_code.group(1) + '"'
         code = json.loads(json_txt)
-        write_file()
+
+        write_file(self.gen_source_directory(submission_info), code)
 
     @staticmethod
     def gen_submission_url(submission_info):

@@ -1,5 +1,7 @@
 # coding=utf-8
+import json
 
+import requests
 import logging
 import re
 
@@ -10,33 +12,37 @@ from app.settings import COOKIE_FILENAME
 
 
 class Account(Model):
-    login_url = URL_BASE + '/accounts/login/'
-
     def __init__(self, account, password):
         super(Account, self).__init__()
         self.account = account
         self.password = password
 
     def login(self):
+        # TODO exception handing
+        login_url = URL_BASE + '/accounts/login/'
         login_data = {'login': self.account,
                       'password': self.password,
                       'csrfmiddlewaretoken': self.csrfmiddlewaretoken}
 
-        page = self.do_request(url=self.login_url, data=login_data)
-        print page
-        # FIXME Try save cookies
+        self.do_request(url=login_url, data=login_data)
+        self.post(url=login_url, data=login_data)
         self.cookies.save(filename=COOKIE_FILENAME, ignore_discard=True)
 
     @property
     def is_login(self):
-        return True
+        profile_url = URL_BASE + '/profile/'
+        page = self.do_request(method='get', url=profile_url)
+        return page.status_code == 200
 
-    # to find out the difference between decorators order
-    @authenticated
+    # TODO to find out the difference between decorators order, add decorator
     @property
     def username(self):
         """
-        get leetcode username
+        get leetcode username from local cookie
         :return:
         """
-        return None
+        cookie = requests.utils.dict_from_cookiejar(self.cookies)
+        msg = cookie['messages']
+        regex = re.compile('as (.*?)\.')
+        user_name = regex.search(msg)
+        return user_name.group(1)

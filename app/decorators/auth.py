@@ -17,3 +17,4 @@ def authenticated(func):
             """judge cookie is existed and valid"""
 
         """输入account代码"""
+
