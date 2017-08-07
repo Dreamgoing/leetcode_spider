@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 def beautiful_soup(html_doc):
-    return BeautifulSoup(html_doc, "html.parser")
+    return BeautifulSoup(html_doc, 'html.parser')
 
 
 def get_encoding_type(txt):

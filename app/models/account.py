@@ -6,6 +6,7 @@ import re
 from app.settings import URL_BASE
 from app.models.base import Model
 from app.decorators.auth import authenticated
+from app.settings import COOKIE_FILENAME
 
 
 class Account(Model):
@@ -21,7 +22,14 @@ class Account(Model):
                       'password': self.password,
                       'csrfmiddlewaretoken': self.csrfmiddlewaretoken}
 
-        self.do_request(url=self.login_url, data=login_data)
+        page = self.do_request(url=self.login_url, data=login_data)
+        print page
+        # FIXME Try save cookies
+        self.cookies.save(filename=COOKIE_FILENAME, ignore_discard=True)
+
+    @property
+    def is_login(self):
+        return True
 
     # to find out the difference between decorators order
     @authenticated

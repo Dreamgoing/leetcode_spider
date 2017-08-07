@@ -13,12 +13,12 @@ class Model(requests.Session):
         self.cookies = LWPCookieJar(filename=COOKIE_FILENAME)
         self.headers = HEADERS_BASE
 
-    def do_request(self, method='post', url=None, parms=None, json=None, data=None, **kwargs):
-        return getattr(self, method)(url, parms=parms, json=json, data=data, **kwargs)
+    def do_request(self, method='post', url=None, json=None, data=None, **kwargs):
+        return getattr(self, method)(url, json=json, data=data, **kwargs)
 
     @property
     def csrfmiddlewaretoken(self):
         this_url = URL_BASE + '/accounts/login/'
         page = self.get(url=this_url, headers=HEADERS_BASE)
-        soup = beautiful_soup(page)
+        soup = beautiful_soup(page.text)
         return soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']

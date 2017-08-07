@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 env
+app/test/cookie.txt
 Makefile_tmp
 solution
