@@ -10,7 +10,7 @@ from app.models.base import Model
 from app.decorators.auth import authenticated
 from app.utils import beautiful_soup, write_file, mkdir
 from app.error import SubmissionInfoError
-from app.settings import SOLUTION_PATH
+from app.settings import SOLUTION_PATH, LANG_MAPPING
 
 
 # TODO to support args validator
@@ -46,7 +46,6 @@ class Submission(Model):
         :return:
         """
         url = self.gen_submission_url(submission_info)
-        print url
         solution_page = self.do_request(method='get', url=url)
         soup = beautiful_soup(solution_page.text)
 
@@ -57,7 +56,7 @@ class Submission(Model):
         json_txt = '"' + submission_code.group(1) + '"'
         code = json.loads(json_txt)
         source_path = os.path.join(self.gen_source_directory(submission_info), self.gen_source_name(submission_info))
-        print source_path
+        print '[Download...] ' + self.gen_source_name(submission_info)
         write_file(source_path, code)
 
     @staticmethod
@@ -80,7 +79,7 @@ class Submission(Model):
             raise SubmissionInfoError()
         title = submission_info['title']
         lang = submission_info['lang']
-        return "".join(title.split(' ')) + '.' + lang
+        return "".join(title.split(' ')) + LANG_MAPPING[lang]
 
     @staticmethod
     def gen_source_directory(submission_info):
@@ -96,5 +95,5 @@ class Submission(Model):
         return path
 
     @staticmethod
-    def write_source_file(self, directory, name, content):
+    def write_source_file(directory, name, content):
         write_file(os.path.join(directory, name), content)

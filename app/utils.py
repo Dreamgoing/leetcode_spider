@@ -5,6 +5,10 @@ import io
 from bs4 import BeautifulSoup
 
 
+def remove_solution():
+    pass
+
+
 def beautiful_soup(html_doc):
     return BeautifulSoup(html_doc, 'html.parser')
 
