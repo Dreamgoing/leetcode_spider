@@ -5,6 +5,7 @@ from config import BASE_PATH
 
 URL_BASE = "https://leetcode.com"
 COOKIE_FILENAME = 'cookie.txt'
+COOKIE_PATH = os.path.join(BASE_PATH, COOKIE_FILENAME)
 MAX_LIMIT = 1000
 URL_SUBMISSION_HISTORY = "https://leetcode.com/api/submissions/?offset=0&limit=1000"
 SOLUTION_DIRNAME = 'solution'

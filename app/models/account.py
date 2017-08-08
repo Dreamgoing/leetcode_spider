@@ -9,7 +9,7 @@ from app.settings import URL_BASE
 from app.models.base import Model
 from app.decorators.auth import authenticated
 from app.decorators.common import timing_function
-from app.settings import COOKIE_FILENAME
+from app.settings import COOKIE_FILENAME, COOKIE_PATH
 
 
 # TODO think the design pattern
@@ -29,7 +29,7 @@ class Account(Model):
 
         self.do_request(url=login_url, data=login_data)
         self.post(url=login_url, data=login_data)
-        self.cookies.save(filename=COOKIE_FILENAME, ignore_discard=True)
+        self.cookies.save(filename=COOKIE_PATH, ignore_discard=True)
 
     def login_with_cookie(self):
         pass
