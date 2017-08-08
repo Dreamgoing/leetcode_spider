@@ -12,6 +12,11 @@ class Problem(Model):
     def __init__(self):
         super(Model, self).__init__()
 
+    def gei_all_problem(self):
+        # TODO
+        url = 'https://leetcode.com/problemset/all/'
+        self.get(url=url)
+
     @staticmethod
     def download_problem_description(self):
         """url: `https://leetcode.com/problems/multiply-strings/description` """

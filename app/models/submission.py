@@ -5,7 +5,7 @@ import re
 import requests
 
 from config import BASE_PATH
-from app.settings import URL_SUBMISSION_HISTORY, SOLUTION_DIRNAME
+from app.settings import URL_SUBMISSION_HISTORY, SOLUTION_DIRNAME, URL_BASE
 from app.models.base import Model
 from app.decorators.auth import authenticated
 from app.utils import beautiful_soup, write_file, mkdir
@@ -16,7 +16,7 @@ from app.settings import SOLUTION_PATH
 # TODO to support args validator
 class Submission(Model):
     def __init__(self):
-        super(Model, self).__init__()
+        super(Submission, self).__init__()
 
     @authenticated
     def get_accepted_list(self):
@@ -46,6 +46,7 @@ class Submission(Model):
         :return:
         """
         url = self.gen_submission_url(submission_info)
+        print url
         solution_page = self.do_request(method='get', url=url)
         soup = beautiful_soup(solution_page.text)
 
@@ -55,8 +56,9 @@ class Submission(Model):
         submission_code = regex.search(soup.text)
         json_txt = '"' + submission_code.group(1) + '"'
         code = json.loads(json_txt)
-
-        write_file(self.gen_source_directory(submission_info), code)
+        source_path = os.path.join(self.gen_source_directory(submission_info), self.gen_source_name(submission_info))
+        print source_path
+        write_file(source_path, code)
 
     @staticmethod
     def gen_submission_url(submission_info):
@@ -64,7 +66,7 @@ class Submission(Model):
         :return: url: submission detail url such as 'https://leetcode.com/submissions/#/<id>'
         """
         if 'status_display' in submission_info:
-            url = BASE_PATH + submission_info['url']
+            url = URL_BASE + submission_info['url']
         else:
             raise SubmissionInfoError()
         return url
@@ -78,7 +80,7 @@ class Submission(Model):
             raise SubmissionInfoError()
         title = submission_info['title']
         lang = submission_info['lang']
-        return "".join(title.split(' ')) + lang
+        return "".join(title.split(' ')) + '.' + lang
 
     @staticmethod
     def gen_source_directory(submission_info):
