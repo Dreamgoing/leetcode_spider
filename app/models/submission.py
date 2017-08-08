@@ -8,8 +8,9 @@ from config import BASE_PATH
 from app.settings import URL_SUBMISSION_HISTORY, SOLUTION_DIRNAME
 from app.models.base import Model
 from app.decorators.auth import authenticated
-from app.utils import beautiful_soup, write_file
+from app.utils import beautiful_soup, write_file, mkdir
 from app.error import SubmissionInfoError
+from app.settings import SOLUTION_PATH
 
 
 # TODO to support args validator
@@ -84,3 +85,14 @@ class Submission(Model):
         """
         if submission directory not exist create directory
         """
+        if 'title' not in submission_info:
+            raise SubmissionInfoError()
+        title = submission_info['title']
+        dirname = "".join(title.split(' '))
+        path = os.path.join(SOLUTION_PATH, dirname)
+        mkdir(path)
+        return path
+
+    @staticmethod
+    def write_source_file(self, directory, name, content):
+        write_file(os.path.join(directory, name), content)

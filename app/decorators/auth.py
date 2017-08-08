@@ -1,7 +1,8 @@
 # coding=utf-8
-
 import requests
 import requests.utils
+
+from app.error import AuthenticationFailed
 
 
 def authenticated(func):
@@ -12,9 +13,9 @@ def authenticated(func):
     """
 
     def wrapper(self, *args, **kwargs):
-        success = False
-        if 'cookie' in requests.utils.dict_from_cookiejar(self.cookie):
-            """judge cookie is existed and valid"""
+        if 'messages' not in requests.utils.dict_from_cookiejar(self.cookie):
+            """judge cookie is not existed and valid"""
+            raise AuthenticationFailed()
+        return func(self, *args, **kwargs)
 
-        """输入account代码"""
-
+    return wrapper

@@ -8,15 +8,18 @@ import re
 from app.settings import URL_BASE
 from app.models.base import Model
 from app.decorators.auth import authenticated
+from app.decorators.common import timing_function
 from app.settings import COOKIE_FILENAME
 
 
+# TODO think the design pattern
 class Account(Model):
     def __init__(self, account, password):
         super(Account, self).__init__()
         self.account = account
         self.password = password
 
+    @timing_function
     def login(self):
         # TODO exception handing
         login_url = URL_BASE + '/accounts/login/'
@@ -27,6 +30,9 @@ class Account(Model):
         self.do_request(url=login_url, data=login_data)
         self.post(url=login_url, data=login_data)
         self.cookies.save(filename=COOKIE_FILENAME, ignore_discard=True)
+
+    def login_with_cookie(self):
+        pass
 
     @property
     def is_login(self):

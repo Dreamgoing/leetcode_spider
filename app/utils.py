@@ -40,3 +40,7 @@ def get_user_info():
 def write_file(filename, content, encoding='utf-8'):
     with io.open(filename, 'w', encoding=encoding) as f:
         f.write(content)
+
+
+def username_valid(username):
+    """judge email or username is correct format"""

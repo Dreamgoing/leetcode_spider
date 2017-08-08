@@ -30,6 +30,7 @@ Write pythonic project for learning web crawler
 + To support docker and pipline
 + To add Unittest
 + To design as a micro server
++ To add supervisor
 
 ## How to use
 >  it works well in python2.7

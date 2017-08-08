@@ -11,6 +11,11 @@ class Model(requests.Session):
     def __init__(self):
         super(Model, self).__init__()
         self.cookies = LWPCookieJar(filename=COOKIE_FILENAME)
+        try:
+            """load cookie from Cookiejar"""
+            self.cookies.load(ignore_discard=True)
+        except:
+            pass
         self.headers = HEADERS_BASE
 
     def do_request(self, method='post', url=None, json=None, data=None, **kwargs):

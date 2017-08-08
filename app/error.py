@@ -3,9 +3,9 @@ class LeetcodeBaseError(Exception):
     pass
 
 
-class LoginError(Exception):
+class AccountError(Exception):
     """
-    LoginError base
+    AccountError base
     """
 
 
@@ -18,4 +18,10 @@ class SubmissionError(Exception):
 class SubmissionInfoError(SubmissionError):
     """
     SubmissionInfo not match
+    """
+
+
+class AuthenticationFailed(AccountError):
+    """
+    Authentication failed
     """
