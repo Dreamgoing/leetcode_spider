@@ -2,3 +2,4 @@ bs4==0.0.1
 requests==2.18.3
 beautifulsoup4==4.6.0
 flask=0.12.2
+twisted=17.5.0
