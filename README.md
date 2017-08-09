@@ -16,6 +16,8 @@ Write pythonic project for learning web crawler
 
 + User login 
 + Download all user's accepted submission
++ Asynio to get web pages
++ Mulitprocess pool to write source file
 
 ## TODO
 
