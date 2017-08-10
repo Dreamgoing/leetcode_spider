@@ -22,6 +22,7 @@ class Model(requests.Session):
         self.post(URL_BASE)
 
     def do_request(self, method='post', url=None, json=None, data=None, **kwargs):
+        print url
         return getattr(self, method)(url, json=json, data=data, **kwargs)
 
     @property
@@ -29,4 +30,5 @@ class Model(requests.Session):
         this_url = URL_BASE + '/accounts/login/'
         page = self.get(url=this_url, headers=HEADERS_BASE)
         soup = beautiful_soup(page.text)
+        print soup.text
         return soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']

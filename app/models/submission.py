@@ -8,6 +8,7 @@ from config import BASE_PATH
 from app.settings import URL_SUBMISSION_HISTORY, SOLUTION_DIRNAME, URL_BASE
 from app.models.base import Model
 from app.decorators.auth import authenticated
+from app.decorators.common import timing_function
 from app.utils import beautiful_soup, write_file, mkdir
 from app.error import SubmissionInfoError
 from app.settings import SOLUTION_PATH, LANG_MAPPING
@@ -38,12 +39,15 @@ class Submission(Model):
         submissions = self.get_accepted_list()
         directory = os.path.join(BASE_PATH, SOLUTION_DIRNAME)
 
+    @timing_function
     @authenticated
-    def download_specific_solution(self, submission_info):
+    def download_specific_solution(self, submission_info, detail=False, written=True):
         """
         download one submission
+        :param written:
+        :param detail:
         :param submission_info: Dict contains one submission info
-        :return:
+        :return: dict: source_path: code
         """
         url = self.gen_submission_url(submission_info)
         solution_page = self.do_request(method='get', url=url)
@@ -56,8 +60,12 @@ class Submission(Model):
         json_txt = '"' + submission_code.group(1) + '"'
         code = json.loads(json_txt)
         source_path = os.path.join(self.gen_source_directory(submission_info), self.gen_source_name(submission_info))
-        print '[Download...] ' + self.gen_source_name(submission_info)
-        write_file(source_path, code)
+        if detail:
+            print '[Download...] ' + self.gen_source_name(submission_info)
+        if written:
+            write_file(source_path, code)
+
+        return {source_path: code}
 
     @staticmethod
     def gen_submission_url(submission_info):

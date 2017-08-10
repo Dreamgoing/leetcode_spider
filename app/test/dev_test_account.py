@@ -20,11 +20,10 @@ def auth():
     s = session.post('https://www.leetcode.com/dream_going')
     print s.status_code
 
-
 if __name__ == '__main__':
     user.login()
     print user.is_login
     print user.username
-    tmp = requests.utils.dict_from_cookiejar(user.cookies)
-    print tmp
-    auth()
+    # tmp = requests.utils.dict_from_cookiejar(user.cookies)
+    # print tmp
+    # auth()

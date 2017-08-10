@@ -8,12 +8,13 @@ def timing_function(some_function):
     :param some_function:
     """
 
-    def wrapper(self, *args, **kwargs):
+    def wrapper(*args, **kwargs):
         start = time.time()
-        some_function(self, *args, **kwargs)
+        res = some_function(*args, **kwargs)
         end = time.time()
         """worker runtime log """
         print "[" + some_function.__name__ + "] Time it took to run the function: " + str((end - start)) + "\n"
+        return res
 
     return wrapper
 

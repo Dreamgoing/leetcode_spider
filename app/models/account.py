@@ -19,7 +19,7 @@ class Account(Model):
         self.account = account
         self.password = password
 
-    @timing_function
+    # TODO has login don't need to login
     def login(self):
         # TODO exception handing
         login_url = URL_BASE + '/accounts/login/'
