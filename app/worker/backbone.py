@@ -115,6 +115,7 @@ if __name__ == '__main__':
     print 'thread_pool using ' + str(st2 - st1) + 's'
     print results
 
+    # 单一线程使用了193.239053s
     st1 = time.time()
     for it in accept_list:
         download_specific_solution(it)
