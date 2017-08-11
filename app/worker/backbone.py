@@ -103,8 +103,9 @@ def get_all_accepted_task():
 # NOTE 这样测试不太好, 需要进行认证
 if __name__ == '__main__':
     # pool = Pool(4)
+    # 可以设计成为一个经典的生产者消费者模型
     # 多线程池使用了34.53405s
-    thread_pool = ThreadPool(8)
+    thread_pool = ThreadPool(20)
     accept_list = get_all_accepted_task()
     download_specific_solution(accept_list[0])
     st1 = time.time()
