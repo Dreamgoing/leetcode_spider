@@ -100,6 +100,7 @@ def get_all_accepted_task():
     return accepted
 
 
+# 多进程会失败
 # NOTE 这样测试不太好, 需要进行认证
 if __name__ == '__main__':
     # pool = Pool(4)
